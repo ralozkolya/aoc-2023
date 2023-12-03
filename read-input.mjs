@@ -8,3 +8,12 @@ export const getLines = (filename) => {
 export const getCharacters = (filename) => {
   return getLines(filename).map((line) => line.split(""));
 };
+
+export const getLine = (filename) => {
+  const lines = getLines(filename);
+  return {
+    width: lines[0].length,
+    height: lines.length,
+    line: lines.join(""),
+  };
+};
