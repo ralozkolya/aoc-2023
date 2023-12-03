@@ -1,9 +1,6 @@
-import { readFileSync } from "node:fs";
+import { getLines } from "../read-input.mjs";
 
-const input = readFileSync("./input.txt").toString();
-
-const result = input
-  .split("\n")
+const result = getLines("./input.txt")
   .map((line) => {
     const numbers = line.match(/\d/g).join("");
     const first = numbers[0];

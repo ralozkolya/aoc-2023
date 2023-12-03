@@ -1,6 +1,4 @@
-import { readFileSync } from "node:fs";
-
-const input = readFileSync("./input.txt").toString();
+import { getLines } from "../read-input.mjs";
 
 const map = {
   one: 1,
@@ -22,8 +20,7 @@ const pattern = Object.keys(map).join("|");
 const regex = new RegExp(`\\d|${pattern}`);
 const revRegex = new RegExp(`\\d|${reverse(pattern)}`);
 
-const result = input
-  .split("\n")
+const result = getLines("./input.txt")
   .map((line) => {
     line = line.replace(regex, match);
     line = reverse(reverse(line).replace(revRegex, match));
