@@ -1,4 +1,10 @@
 import _ from "lodash";
+import {
+  Worker,
+  isMainThread,
+  parentPort,
+  workerData,
+} from "node:worker_threads";
 import { getLines } from "../read-input.mjs";
 
 const data = getLines("./input.txt");
@@ -40,15 +46,26 @@ data.forEach((line) => {
 
 let min = Infinity;
 
-seedRanges.forEach(([start, length]) => {
+if (isMainThread) {
+  seedRanges.forEach(([start, length]) => {
+    const worker = new Worker("./2.mjs", {
+      workerData: [start, length],
+    });
+    worker.on("message", (message) => {
+      min = Math.min(min, message);
+      console.log(min);
+    });
+  });
+} else {
+  const [start, length] = workerData;
+  let min = Infinity;
   for (let i = start; i < start + length; i++) {
     const result = steps.reduce((result, step) => {
       const mapper = step.find((mapper) => mapper.applies(result));
       return mapper ? mapper.map(result) : result;
     }, i);
-
     min = Math.min(min, result);
   }
-});
 
-console.log(min);
+  parentPort.postMessage(min);
+}
