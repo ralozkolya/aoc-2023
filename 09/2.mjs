@@ -12,7 +12,7 @@ const getSequences = (history) => {
 };
 
 const getNextValue = (sequences) => {
-  return sequences.reduce((prev, sequence) => sequence[0] - prev, 0);
+  return sequences.map((sequence) => sequence[0]).reduce((a, b) => b - a);
 };
 
 const result = data
