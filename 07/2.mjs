@@ -24,27 +24,12 @@ const handToScore = (hand) => {
   const map = {};
   let js = 0;
   hand.split("").forEach((char) => {
-    if ("J" === char) {
-      return js++;
-    }
+    if ("J" === char) return js++;
     map[char] ? map[char]++ : (map[char] = 1);
   });
-
   const values = Object.values(map).sort((a, b) => b - a);
-
-  if (3 < js) return types[5];
-  if (3 === js) return 2 === values[0] ? types[5] : types["4-1"];
-  if (2 === js) {
-    if (3 === values[0]) return types[5];
-    if (2 === values[0]) return types["4-1"];
-    return types["3-1"];
-  }
-  if (js) {
-    if (4 === values[0]) return types[5];
-    if (3 === values[0]) return types["4-1"];
-    if (2 === values[0]) return 2 === values[1] ? types["3-2"] : types["3-1"];
-    return types["2-1"];
-  }
+  if (!values.length) return types["5"];
+  values[0] = values[0] + js;
   return types[values.slice(0, 2).join("-")];
 };
 
@@ -59,12 +44,7 @@ const compareSameType = (handA, handB) => {
 const compareHands = (handA, handB) => {
   const scoreA = handToScore(handA);
   const scoreB = handToScore(handB);
-
-  if (scoreA === scoreB) {
-    return compareSameType(handA, handB);
-  }
-
-  return scoreA - scoreB;
+  return scoreA === scoreB ? compareSameType(handA, handB) : scoreA - scoreB;
 };
 
 data.sort((a, b) => {
