@@ -1,6 +1,6 @@
 import { getLines } from "../read-input.mjs";
 
-const data = getLines("./test-input.txt");
+const data = getLines("./input.txt");
 
 const types = {
   5: 7,
@@ -16,7 +16,7 @@ const values = {
   A: 14,
   K: 13,
   Q: 12,
-  J: 1,
+  J: 11,
   T: 10,
 };
 
@@ -40,12 +40,7 @@ const compareSameType = (handA, handB) => {
 const compareHands = (handA, handB) => {
   const scoreA = handToScore(handA);
   const scoreB = handToScore(handB);
-
-  if (scoreA === scoreB) {
-    return compareSameType(handA, handB);
-  }
-
-  return scoreA - scoreB;
+  return scoreA === scoreB ? compareSameType(handA, handB) : scoreA - scoreB;
 };
 
 data.sort((a, b) => {
