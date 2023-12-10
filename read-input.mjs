@@ -5,7 +5,7 @@ export const getLines = (filename) => {
   return input.trim().split("\n");
 };
 
-export const getCharacters = (filename) => {
+export const getCharacters = (filename, line) => {
   return getLines(filename).map((line) => line.split(""));
 };
 
