@@ -9,7 +9,7 @@ const getStartingPoints = (index) => {
   const left = ["-", "F", "L"].includes(line[index - 1]) && index - 1;
   const right = ["-", "J", "7"].includes(line[index + 1]) && index + 1;
 
-  return [top, bot, left, right].filter((_) => _);
+  return [top, bot, left, right].find((_) => _);
 };
 
 const getNext = (current, previous) => {
@@ -30,16 +30,15 @@ const getNext = (current, previous) => {
 };
 
 const index = line.indexOf("S");
-let [a, b] = getStartingPoints(index);
-let [indexA, indexB] = [index, index];
+let current = getStartingPoints(index);
+let previous = index;
 
 let count = 1;
-while (a !== b) {
-  const [tempA, tempB] = [a, b];
-  a = getNext(a, indexA);
-  b = getNext(b, indexB);
-  [indexA, indexB] = [tempA, tempB];
+while (current !== index) {
+  const temp = current;
+  current = getNext(current, previous);
+  previous = temp;
   count++;
 }
 
-console.log(count);
+console.log(count / 2);
