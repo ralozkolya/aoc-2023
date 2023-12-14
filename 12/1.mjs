@@ -2,8 +2,8 @@ import { getLines } from "../read-input.mjs";
 import { repeat } from "../util/string.mjs";
 
 const data = getLines("./input.txt").map((_) => {
-  const [symbols, hashes] = _.split(" ");
-  return [symbols, hashes.split(",").map(Number)];
+  const [symbols, numbers] = _.split(" ");
+  return [symbols, numbers.split(",").map(Number)];
 });
 
 const isValid = (symbols, numbers) => {
