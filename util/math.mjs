@@ -47,3 +47,11 @@ export const between = (subject, a, b) => {
 
   return min < subject && subject < max;
 };
+
+export const factorial = (n) => {
+  let sum = n;
+  while (--n) {
+    sum *= n;
+  }
+  return sum;
+};
