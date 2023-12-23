@@ -1,4 +1,5 @@
 import { getLine } from "../read-input.mjs";
+import { shoelace } from "../util/math.mjs";
 
 const { width, line } = getLine("./input.txt");
 
@@ -36,33 +37,16 @@ const getCoordinates = (number) => {
   };
 };
 
-const shoelace = (points) => {
-  let sum = 0;
-  const l = points.length;
-
-  for (let i = 0; i < l - 1; i++) {
-    const a = getCoordinates(points[i]);
-    const b = getCoordinates(points[i + 1]);
-    sum += a.x * b.y - a.y * b.x;
-  }
-
-  const a = getCoordinates(points[l - 1]);
-  const b = getCoordinates(points[0]);
-  sum += a.x * b.y - b.x * a.y;
-
-  return Math.abs(sum) / 2;
-};
-
 const index = line.indexOf("S");
 let current = getStartingPoints(index);
 let previous = index;
 
-const loop = [index];
-while (current !== index) {
-  loop.push(current);
+const loop = [];
+do {
+  loop.push(getCoordinates(previous));
   const temp = current;
   current = getNext(current, previous);
   previous = temp;
-}
+} while (current !== index);
 
 console.log(shoelace(loop) + 1 - loop.length / 2);

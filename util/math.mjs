@@ -55,3 +55,20 @@ export const factorial = (n) => {
   }
   return sum;
 };
+
+export const shoelace = (points) => {
+  const l = points.length;
+  let sum = 0;
+
+  for (let i = 0; i < l - 1; i++) {
+    const a = points[i];
+    const b = points[i + 1];
+    sum += a.x * b.y - a.y * b.x;
+  }
+
+  const a = points[l - 1];
+  const b = points[0];
+  sum += a.x * b.y - b.x * a.y;
+
+  return Math.abs(sum) / 2;
+};
