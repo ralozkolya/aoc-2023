@@ -1,5 +1,4 @@
 import { getLines } from "../read-input.mjs";
-import { repeat } from "../util/string.mjs";
 
 const data = getLines("./input.txt").map((_) => {
   const [symbols, numbers] = _.split(" ");
@@ -16,8 +15,8 @@ const mix = (source, combination) => {
 };
 
 const getCombinations = (n, m, prefix = "", result = []) => {
-  if (n <= m) return [prefix + repeat("#", n)];
-  if (m <= 0) return [prefix + repeat(".", n)];
+  if (n <= m) return [prefix + "#".repeat(n)];
+  if (m <= 0) return [prefix + ".".repeat(n)];
 
   return [
     ...result,

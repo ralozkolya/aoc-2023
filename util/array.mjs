@@ -7,4 +7,4 @@ export const fillSequence = (end, start = 0) => {
 };
 
 export const rotate = (matrix) =>
-  matrix[0].map((val, index) => matrix.map((row) => row[index]).reverse());
+  matrix[0].map((_, index) => matrix.map((row) => row[index]).reverse());
