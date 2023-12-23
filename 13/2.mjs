@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { getCharacters } from "../read-input.mjs";
 import { rotate } from "../util/array.mjs";
 
@@ -14,12 +13,39 @@ const data = getCharacters("./input.txt").reduce(
   [[]]
 );
 
+const compare = (a, b) => {
+  let differences = 0;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      differences++;
+    }
+
+    if (differences > 1) {
+      return differences;
+    }
+  }
+
+  return differences;
+};
+
 const isMirrored = (pattern) => {
   outer: for (let i = 1; i < pattern.length; i++) {
+    let differences = 0;
     for (let j = i - 1; j >= 0; j--) {
       const upper = i + i - j - 1;
       if (pattern.length <= upper) break;
-      if (!_.isEqual(pattern[upper], pattern[j])) continue outer;
+
+      const lineDiff = compare(pattern[upper], pattern[j]);
+
+      if (lineDiff > 1) {
+        continue outer;
+      } else if (lineDiff) {
+        differences++;
+      }
+    }
+
+    if (differences !== 1) {
+      continue outer;
     }
     return i;
   }
